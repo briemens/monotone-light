@@ -26,7 +26,7 @@ if exists('g:loaded_monotone_light')
 	finish
 endif
 if !exists('g:monotone_light_color')
-	let g:monotone_light_color = [5, 3, 82]
+	let g:monotone_light_color = [82, 3, 25]
 endif
 if !exists('g:monotone_light_secondary_hue_offset')
 	let g:monotone_light_secondary_hue_offset = 0
@@ -74,12 +74,12 @@ endfunction
 function s:Shade(color, offset)
 	let h = a:color[0]
 	let s = a:color[1]
-	let l = a:color[2] - a:offset
+	let l = a:color[2] + a:offset
 	let l = l < 1 ? 1 : l > 100 ? 100 : l
 	return s:HSLToHex(h, s, l)
 endfunction
 
-function s:monotone_lightColors(color, secondary_hue_offset, emphasize_comments, contrast_factor)
+function s:MonotoneLightColors(color, secondary_hue_offset, emphasize_comments, contrast_factor)
 	let s:color_normal   = s:Shade(a:color, 0)
 	let s:color_dark_0   = s:Shade(a:color, 60 * a:contrast_factor)
 	let s:color_dark_1   = s:Shade(a:color, 69 * a:contrast_factor)
@@ -161,7 +161,8 @@ function s:monotone_lightColors(color, secondary_hue_offset, emphasize_comments,
 	" Highlighted syntax items
 	call s:HiFG('Comment', a:emphasize_comments ? s:color_hl_2 : s:color_bright_1, 243, 'italic')
 	call s:HiFG('String', s:color_bright_2, 247, 'NONE')
-	call s:Hi('EndOfBuffer', s:color_eob, 'NONE', 95, 'NONE', 'NONE')
+	" call s:Hi('EndOfBuffer', s:color_eob, 'NONE', 95, 'NONE', 'NONE')
+  hi EndOfBuffer guifg=#ffffff
 	call s:Hi('NonText', s:color_nt, 'NONE', 95, 'NONE', 'NONE')
 	call s:Hi('Todo', s:color_hl_2, 'NONE', 214, 'NONE', 'bold,italic')
 	call s:Hi('Whitespace', s:color_dark_0, 'NONE', 236, 'NONE', 'NONE')
@@ -184,12 +185,14 @@ function s:monotone_lightColors(color, secondary_hue_offset, emphasize_comments,
 	hi DiffText    guifg=#7788aa  guibg=NONE  gui=underline  ctermfg=67   ctermbg=NONE  cterm=underline
 
 	" Quickfix window (some groups need custom 'winhl')
-	hi QuickFixLine guibg=#333333
-	hi QFNormal guibg=#222222
-	hi QFEndOfBuffer guifg=#222222
+	hi QuickFixLine guibg=#dddddd
+	hi QFNormal guibg=#dddddd
+	hi QFEndOfBuffer guifg=#dddddd
 
 	" Non-highlighted syntax items
 	hi clear Conceal
+  hi Conceal guifg=#dddddd
+	hi VertSplit guifg=#dddddd
 	hi clear Constant
 	hi clear Define
 	hi clear Directory
@@ -200,14 +203,20 @@ function s:monotone_lightColors(color, secondary_hue_offset, emphasize_comments,
 	hi clear Special
 	hi clear Noise
 
+	" NERD tree
+	hi NERDTreeClosable guifg=#888888
+	hi NERDTreeOpenable guifg=#888888
+
 	" Plugin-specific highlighting
 	hi link CursorWordHighlight Underlined
 
 	" ALE
 	hi ALEError       guisp=#ff4444 gui=undercurl ctermfg=203 cterm=bold,underline
-	hi ALEWarning     guisp=#dd9922 gui=undercurl ctermfg=214 cterm=bold,underline
+	hi ALEErrorLine       guibg=#ff4444 guifg=#ffffff
+	hi ALEWarning     guisp=#229922 gui=undercurl ctermfg=214 cterm=bold,underline
+	hi ALEWarningLine     guibg=#ccffcc " guifg=#ffffff
 	hi ALEErrorSign   guifg=#ff4444 ctermfg=203
-	hi ALEWarningSign guifg=#dd9922 ctermfg=214
+	hi ALEWarningSign guifg=#229922 ctermfg=214
 
 	" COC
 	hi CocErrorHighlight   guisp=#ff4444 gui=undercurl ctermfg=203 cterm=bold,underline
@@ -232,21 +241,21 @@ function s:monotone_lightColors(color, secondary_hue_offset, emphasize_comments,
 	hi link HighlightedyankRegion Warning
 endfunction
 
-call s:monotone_lightColors(
+call s:MonotoneLightColors(
 	\ g:monotone_light_color,
 	\ g:monotone_light_secondary_hue_offset,
 	\ g:monotone_light_emphasize_comments,
 	\ g:monotone_light_contrast_factor)
 
-function g:monotone_light(h, s, l, ...)
+function g:MonotoneLight(h, s, l, ...)
 	let l:secondary_hue_offset = a:0 > 0 ? a:1 : g:monotone_light_secondary_hue_offset
 	let l:emphasize_comments = a:0 > 1 ? a:2 : g:monotone_light_emphasize_comments
 	let l:contrast_factor = a:0 > 2 ? str2float(a:3) : g:monotone_light_contrast_factor
-	call s:monotone_lightColors(
+	call s:MonotoneLightColors(
 		\ [a:h, a:s, a:l],
 		\ l:secondary_hue_offset,
 		\ l:emphasize_comments,
 		\ l:contrast_factor)
 endfunction
 
-command! -nargs=+ monotone_light call g:monotone_light(<f-args>)
+command! -nargs=+ MonotoneLight call g:MonotoneLight(<f-args>)
