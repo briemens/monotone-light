@@ -26,10 +26,13 @@
 "   finish
 " endif
 set background=light
+if exists('AirlineTheme')
+  AirlineTheme monotone_light
+endif
+
 if !exists('g:colors_name') || g:colors_name != "monotone_light"
   let g:colors_name = 'monotone_light'
 end
-
 if !exists('g:monotone_light_color')
   let g:monotone_light_color = [82, 3, 25]
 endif
@@ -127,15 +130,20 @@ function! s:MonotoneLightColors(color, secondary_hue_offset, emphasize_comments,
   call s:HiBG('CursorI', '#ffffff', 255, 'NONE') " Insert cursor
   call s:HiBG('CursorR', s:color_hl_2, 203, 'NONE') " Replace cursor
   call s:HiBG('CursorO', s:color_hl_3, 39, 'NONE') " Operator-pending cursor
+  hi clear Cursor
 
   " UI/special
   call s:Hi('ColorColumn', 'NONE', s:color_dark_2, 'NONE', 234, 'NONE')
   call s:Hi('CursorLine', 'NONE', s:color_dark_1, 'NONE', 234, 'NONE')
   call s:Hi('CursorLineNr', s:color_bright_2, s:color_dark_1, 'NONE', 235, 'NONE')
   call s:Hi('Folded', s:color_normal, s:color_dark_1, 252, 235, 'italic')
-  call s:Hi('Search', s:color_dark_3, s:color_hl_2, 16, 214, 'bold')
+  " call s:Hi('Search', s:color_dark_3, s:color_hl_2, 16, 214, 'bold')
+  hi! Search guifg=NONE guibg=#dddddd
+  hi! SearchCurrent gui=reverse guifg=NONE guibg=NONE
+  hi! IncSearch gui=reverse guifg=NONE guibg=NONE
   call s:Hi('LineNr', s:color_bright_0, 'NONE', 240, 'NONE', 'NONE')
-  call s:Hi('VertSplit', s:color_bright_0, 'NONE', 240, 'NONE', 'NONE')
+  " call s:Hi('VertSplit', s:color_bright_0, 'NONE', 240, 'NONE', 'NONE')
+  hi! VertSplit guifg=#fefefe
   call s:Hi('WildMenu', s:color_dark_3, s:color_normal, 16, 248, 'NONE')
   hi! SpecialKey    guifg=NONE     guibg=NONE     gui=bold    ctermfg=NONE  ctermbg=NONE  cterm=bold
   hi! clear         FoldColumn
@@ -195,7 +203,7 @@ function! s:MonotoneLightColors(color, secondary_hue_offset, emphasize_comments,
 
   " Non-highlighted syntax items
   hi! clear Conceal
-  hi! Conceal guifg=#dddddd
+  hi! Conceal guifg=#eeeeee
   hi! VertSplit guifg=#dddddd
   hi! clear Constant
   hi! clear Define
@@ -218,7 +226,7 @@ function! s:MonotoneLightColors(color, secondary_hue_offset, emphasize_comments,
   hi! ALEError       guisp=#ff4444 gui=undercurl ctermfg=203 cterm=bold,underline
   hi! ALEErrorLine       guibg=#ff4444 guifg=#ffffff
   hi! ALEWarning     guisp=#229922 gui=undercurl ctermfg=214 cterm=bold,underline
-  hi! ALEWarningLine     guibg=#ccffcc " guifg=#ffffff
+  hi! ALEWarningLine     guibg=#229922 " guifg=#ffffff
   hi! ALEErrorSign   guifg=#ff4444 ctermfg=203
   hi! ALEWarningSign guifg=#229922 ctermfg=214
 
