@@ -272,10 +272,10 @@ endfunction
 
 command! -nargs=+ MonotoneLight call g:MonotoneLight(<f-args>)
 
-if (!exists('g:rainbow_conf'))
+" if (!exists('g:rainbow_conf'))
   let g:rainbow_conf = {
         \ 'guifgs': [
         \ '#aaaaaa', '#555555', '#bbbbbb', '#666666', '#cccccc', '#888888', '#cccccc', '#444444'
         \]
         \}
-endif
+" endif
