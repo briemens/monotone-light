@@ -122,7 +122,8 @@ function! s:MonotoneLightColors(color, secondary_hue_offset, emphasize_comments,
   endfunction
 
   " Main colors
-  call s:Hi('Normal', s:color_normal, s:color_dark_3, 252, 233, 'NONE')
+  " call s:Hi('Normal', s:color_normal, s:color_dark_3, 252, 233, 'NONE')
+  call s:Hi('Normal', "#000000", "#ffffff", 252, 233, 'NONE')
   call s:Hi('Visual', s:color_dark_3, s:color_normal, 16, 248, 'NONE')
 
   " Cursors
@@ -225,8 +226,10 @@ function! s:MonotoneLightColors(color, secondary_hue_offset, emphasize_comments,
   " ALE
   hi! ALEError       guisp=#ff4444 gui=undercurl ctermfg=203 cterm=bold,underline
   hi! ALEErrorLine       guibg=#ff4444 guifg=#ffffff
-  hi! ALEWarning     guisp=#229922 gui=undercurl ctermfg=214 cterm=bold,underline
-  hi! ALEWarningLine     guibg=#229922 " guifg=#ffffff
+  " hi! ALEWarning     guisp=#229922 gui=undercurl ctermfg=214 cterm=bold,underline
+  " hi! ALEWarningLine     guibg=#229922 " guifg=#ffffff
+  hi! ALEWarning     guisp=#22ee22 gui=undercurl ctermfg=214 cterm=bold,underline
+  hi! ALEWarningLine     guibg=#22ee22 " guifg=#ffffff
   hi! ALEErrorSign   guifg=#ff4444 ctermfg=203
   hi! ALEWarningSign guifg=#229922 ctermfg=214
 
