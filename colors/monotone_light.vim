@@ -25,6 +25,7 @@
 " if exists('g:loaded_monotone_light')
 "   finish
 " endif
+set termguicolors
 set background=light
 if exists('AirlineTheme')
   AirlineTheme monotone_light
@@ -103,6 +104,9 @@ function! s:MonotoneLightColors(color, secondary_hue_offset, emphasize_comments,
   let s:color_eob    = s:HSLToHex(a:secondary_hue_offset,       40, a:color[2] - 50)
   let s:color_nt     = s:HSLToHex(a:secondary_hue_offset + 10,  45, a:color[2] - 40)
 
+  let s:orange = "#F6BB30"
+  let s:blue = "#81A397"
+
   hi clear
   syntax reset
 
@@ -172,8 +176,9 @@ function! s:MonotoneLightColors(color, secondary_hue_offset, emphasize_comments,
   call s:Hi('StatusLineNC', s:color_bright_0, 'NONE', 240, 'NONE', 'underline')
 
   " Highlighted syntax items
-  call s:HiFG('Comment', a:emphasize_comments ? s:color_hl_2 : s:color_bright_1, 243, 'italic')
-  call s:HiFG('String', s:color_bright_2, 247, 'NONE')
+  call s:Hi('Comment', "#000000", s:color_dark_2, 252, 233, 'NONE')
+  call s:Hi('String', "#000000", s:color_dark_1, 252, 233, 'NONE')
+  " call s:HiFG('String', s:color_bright_2, 247, 'NONE')
   " call s:Hi('EndOfBuffer', s:color_eob, 'NONE', 95, 'NONE', 'NONE')
   hi EndOfBuffer guifg=#ffffff
   call s:Hi('NonText', s:color_nt, 'NONE', 95, 'NONE', 'NONE')
